@@ -1,0 +1,11 @@
+{
+  "name": "r2d2/litemvc.lc",
+  "autoload": {
+    "psr-4": {
+      "Kernel\\": "kernel/"
+    }
+  },
+  "require": {
+    "bramus/router": "~1.4"
+  }
+}
