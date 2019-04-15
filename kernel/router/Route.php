@@ -4,12 +4,24 @@ namespace Kernel\Router;
 
 class Route
 {
-    public function __constuct(string $method, string $namespace, $callback)
-    {
+    public $callback;
 
+    public $method;
+
+    public $namespace;
+
+    public function __construct(string $method, string $namespace, $callback)
+    {
+        $this->method = $method;
+        $this->namespace = $namespace;
+        $this->callback = $callback;
     }
 
-    public function __call(string $name, array $arguments) : Route
+    /**
+     * @return Route
+     * @throws \Exception
+     */
+    public static function __callStatic(string $name, array $arguments) : Route
     {
         list($namespace, $callback) = $arguments;
 
@@ -19,9 +31,9 @@ class Route
    
             case 'post':
                 return new Route('POST', $namespace, $callback);
-        
+            
             default:
-                return new \Exception('Method not found');
+                throw new \Exception('Call to undefined method {$self}::{$name}()');
         }
     }
 }

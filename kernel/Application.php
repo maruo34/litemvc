@@ -2,6 +2,12 @@
 
 namespace Kernel;
 
+use Kernel\Router\ {
+    Router,
+    Route,
+    RouteResolver
+};
+
 class Application
 {
     protected $router;
@@ -15,10 +21,10 @@ class Application
     }
 
     public function resolveRequest(Request $request) : Response
-    {        
+    {
         $route = $this->router->resolveRequest($request);
-        
-        $routeResolver = new \Kernel\Router\RouteResolver($route);
+
+        $routeResolver = new RouteResolver($route);
 
         $response = $routeResolver->resolve($request); 
         
@@ -27,18 +33,22 @@ class Application
 
     private function init()
     {
-        $this->base_pach = dirname(__DIR__);
-        $this->router = new \Kernel\Router\Router();
+        $this->base_path = dirname(__DIR__);
+        $this->router = new Router();
     }
 
     private function mapRoutes()
     {
-        $this->router->defineRoutes(
-            $this->base_path . DIRECTORY_SEPARATOR . '/routes/web.php'
+        $this->router->pushRoutes(
+            require_once (
+                $this->base_path . DIRECTORY_SEPARATOR . '/routes/web.php'
+            )
         );
 
-        $this->router->defineRoutes(
-            $this->base_path . DIRECTORY_SEPARATOR . '/routes/api.php'
+        $this->router->pushRoutes(
+            require_once (
+                $this->base_path . DIRECTORY_SEPARATOR . '/routes/api.php'
+            )
         );
     }
 }

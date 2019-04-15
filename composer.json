@@ -2,6 +2,8 @@
   "name": "r2d2/litemvc.lc",
   "autoload": {
     "psr-4": {
+      "Models\\": "models/",
+      "Controllers\\": "controllers/",
       "Kernel\\": "kernel/"
     }
   },

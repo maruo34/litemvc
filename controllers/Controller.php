@@ -7,7 +7,7 @@ use Kernel\Response;
 
 class Controller
 {
-    protected function view(string $template, array $data, int $status_code)
+    protected function view(string $template, array $data, int $status_code = 200)
     {
         $content = (new Vue($template, $data))->renderHtml();
 
@@ -21,5 +21,10 @@ class Controller
         $headers['content-type'] = 'application/json';
         
         return new Response($content, $status_code, $headers);
+    }
+
+    protected function back()
+    {
+
     }
 }

@@ -43,19 +43,36 @@ class Request
         $this->headers = $server;
     }
 
-    public function isAjax() : bool
+    public function isXmlHttpRequest() : bool
     {
-
+        return isset($this->headers['X-Requested-With']) 
+            && $this->headers['X-Requested-With'] === 'XMLHttpRequest';
     }
 
-    public function getIp() : string
-    {
-        
-    }
-    
     public function getMethod() : string
     {
+        return $this->headers['REQUEST_METHOD'];
+    }
 
+    public function getAbsoluteUrl()
+    {
+        print_r($this->resolveRequestUri());
+        // return $this->getHostInfo() . $this->getUrl(); 
+    }
+
+    public function getHostInfo()
+    {
+
+    }
+
+    public function getUri() : string
+    {
+        return $this->headers['REQUEST_URI'];
+    }
+
+    public function getStringUrl() : string
+    {
+        return $this->getMethod() . $this->getUri();
     }
     
     /**

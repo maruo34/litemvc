@@ -6,18 +6,27 @@ use Kernel\Request;
 
 class Router
 {
-    public function __construct()
-    {
-        
-    }
+    /**
+     * @var array<Route>
+     */
+    protected $routes = [];
 
     public function resolveRequest(Request $request) : Route
     {
-        
+        foreach($this->routes as $route)
+        {
+            
+        }
+
+        return $route;
     }
 
-    public function defineRoutes(string $routes_path)
+    /**
+     * @param array<Route>
+     * @return void
+     */
+    public function pushRoutes(array $routes) : void
     {
-
+        $this->routes = array_merge($this->routes, $routes);
     }
 }
